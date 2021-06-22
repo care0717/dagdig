@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  description: PFN 2019 Internship Challenge
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  title: Workflow tool
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/api
+paths:
+  /jobs:
+    get:
+      parameters:
+      - description: job created time
+        explode: true
+        in: query
+        name: created
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Job'
+                type: array
+          description: jobs response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+components:
+  schemas:
+    Job:
+      example:
+        created: 00:00:01
+        id: 1
+        priority: Low
+        tasks:
+        - 5
+        - 6
+        - 7
+      properties:
+        id:
+          description: id of the job
+          example: 1
+          format: int32
+          type: integer
+        created:
+          description: created time of the job
+          example: 00:00:01
+          type: string
+        priority:
+          description: priority of the job
+          example: Low
+          type: string
+        tasks:
+          example:
+          - 5
+          - 6
+          - 7
+          items:
+            format: int32
+            type: integer
+          type: array
+      required:
+      - created
+      - id
+      - priority
+      - tasks
+    Error:
+      properties:
+        code:
+          description: Error code
+          format: int32
+          type: integer
+        message:
+          description: Error message
+          type: string
+      required:
+      - code
+      - message
