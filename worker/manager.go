@@ -1,10 +1,11 @@
 package openapi
 
 type WorkerManager struct {
-	capacity int
-	readyWorkers []TaskWorker
+	capacity       int
+	readyWorkers   []TaskWorker
 	runningWorkers []TaskWorker
 }
+
 func NewWorkerManager(capacity int) WorkerManager {
 	return WorkerManager{capacity: capacity}
 }
@@ -20,7 +21,7 @@ func (m *WorkerManager) Run() int {
 	}
 	var nextReadyWorkers []TaskWorker
 	for _, w := range m.readyWorkers {
-		if m.capacity >= runningPoint + int(w.ExecutingPoint()) {
+		if m.capacity >= runningPoint+int(w.ExecutingPoint()) {
 			runningPoint += int(w.ExecutingPoint())
 			currentRunningWorkers = append(currentRunningWorkers, w)
 		} else {

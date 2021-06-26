@@ -10,7 +10,7 @@ import (
 
 func main() {
 	var (
-		maxTime int
+		maxTime  int
 		capacity int
 	)
 	flag.IntVar(&maxTime, "workMaxTime", 4800, "work max time [sec]")
@@ -22,7 +22,7 @@ func main() {
 	ctx := context.Background()
 	manager := openapi.NewWorkerManager(capacity)
 	for i := 0; i < maxTime; i++ {
-		created := openapi.ToCreatedFormat(time.Duration(i)*time.Second)
+		created := openapi.ToCreatedFormat(time.Duration(i) * time.Second)
 		req := c.DefaultApi.JobsGet(ctx).Created(created)
 		jobs, _, err := c.DefaultApi.JobsGetExecute(req)
 		if err != nil {

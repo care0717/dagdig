@@ -1,6 +1,7 @@
 package openapi
 
 type Status int
+
 const (
 	Running Status = iota + 1
 	Finished
@@ -15,6 +16,7 @@ type TaskWorker interface {
 type taskWorker struct {
 	tasks []int32
 }
+
 func (t taskWorker) completed() bool {
 	return len(t.tasks) == 0
 }

@@ -6,33 +6,33 @@ import (
 
 func TestTaskWorker(t *testing.T) {
 	tests := []struct {
-		name string
-		tasks []int32
-		tics int
+		name        string
+		tasks       []int32
+		tics        int
 		expectPoint int32
 	}{
 		{
-			name: "task finished",
-			tasks: []int32{5, 3},
-			tics: 8,
+			name:        "task finished",
+			tasks:       []int32{5, 3},
+			tics:        8,
 			expectPoint: 0,
 		},
 		{
-			name: "task already finished",
-			tasks: []int32{5, 3},
-			tics: 9,
+			name:        "task already finished",
+			tasks:       []int32{5, 3},
+			tics:        9,
 			expectPoint: 0,
 		},
 		{
-			name: "task running",
-			tasks: []int32{5, 3},
-			tics: 2,
+			name:        "task running",
+			tasks:       []int32{5, 3},
+			tics:        2,
 			expectPoint: 3,
 		},
 		{
-			name: "task switched",
-			tasks: []int32{5, 3},
-			tics: 5,
+			name:        "task switched",
+			tasks:       []int32{5, 3},
+			tics:        5,
 			expectPoint: 3,
 		},
 	}
