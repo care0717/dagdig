@@ -12,7 +12,7 @@ package openapi
 import (
 	"net/http"
 	"strings"
-	)
+)
 
 // A DefaultApiController binds http requests to an api service and writes the service results to the http response
 type DefaultApiController struct {
@@ -26,7 +26,7 @@ func NewDefaultApiController(s DefaultApiServicer) Router {
 
 // Routes returns all of the api route for the DefaultApiController
 func (c *DefaultApiController) Routes() Routes {
-	return Routes{ 
+	return Routes{
 		{
 			"JobsGet",
 			strings.ToUpper("Get"),
@@ -36,7 +36,7 @@ func (c *DefaultApiController) Routes() Routes {
 	}
 }
 
-// JobsGet - 
+// JobsGet -
 func (c *DefaultApiController) JobsGet(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	created := query.Get("created")

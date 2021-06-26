@@ -31,7 +31,7 @@ func Parse(input io.Reader) (Job, error) {
 			job.Priority = lines[i]
 		case "[Tasks]":
 			i++
-			for ;i < len(lines); i++ {
+			for ; i < len(lines); i++ {
 				if lines[i] == "" {
 					continue
 				}

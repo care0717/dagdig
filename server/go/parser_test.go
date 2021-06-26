@@ -9,18 +9,18 @@ import (
 
 func TestParse(t *testing.T) {
 	tests := []struct {
-		name string
+		name  string
 		input io.Reader
-		want Job
+		want  Job
 	}{
 		{
-			name: "normal",
-			input:  bytes.NewBufferString("[JobID]\n1\n\n[Created]\n00:00:05\n\n[Priority]\nLow\n\n[Tasks]\n4\n3\n"),
+			name:  "normal",
+			input: bytes.NewBufferString("[JobID]\n1\n\n[Created]\n00:00:05\n\n[Priority]\nLow\n\n[Tasks]\n4\n3\n"),
 			want: Job{
 				Id:       1,
 				Created:  "00:00:05",
 				Priority: "Low",
-				Tasks:    []int32{4,3},
+				Tasks:    []int32{4, 3},
 			},
 		},
 	}
@@ -37,16 +37,16 @@ func TestParse(t *testing.T) {
 	}
 
 	errorTests := []struct {
-		name string
+		name  string
 		input io.Reader
 	}{
 		{
-			name: "Job id is not int",
-			input:  bytes.NewBufferString("[JobID]\nhoge\n\n[Created]\n00:00:05\n\n[Priority]\nLow\n\n[Tasks]\n4\n3\n"),
+			name:  "Job id is not int",
+			input: bytes.NewBufferString("[JobID]\nhoge\n\n[Created]\n00:00:05\n\n[Priority]\nLow\n\n[Tasks]\n4\n3\n"),
 		},
 		{
-			name: "Tasks is not int",
-			input:  bytes.NewBufferString("[JobID]\n1\n\n[Created]\n00:00:05\n\n[Priority]\nLow\n\n[Tasks]\n4\nfuga\n3\n"),
+			name:  "Tasks is not int",
+			input: bytes.NewBufferString("[JobID]\n1\n\n[Created]\n00:00:05\n\n[Priority]\nLow\n\n[Tasks]\n4\nfuga\n3\n"),
 		},
 	}
 	for _, tt := range errorTests {
