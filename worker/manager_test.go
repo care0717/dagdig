@@ -8,6 +8,9 @@ type mockTaskWorker struct {
 	priority int
 }
 
+func (m mockTaskWorker) MaxPoint() int32 {
+	return m.point
+}
 func (m mockTaskWorker) Priority() int {
 	return m.priority
 }
@@ -47,11 +50,11 @@ func TestWorkerManagerRun(t *testing.T) {
 			expectedPoint: 8,
 		},
 		{
-			name:          "switch to ready worker",
-			readyWorker:   []TaskWorker{&mockTaskWorker{point: 8}},
+			name:          "switch to high point worker",
+			readyWorker:   []TaskWorker{&mockTaskWorker{point: 8}, &mockTaskWorker{point: 9}},
 			runningWorker: []TaskWorker{&mockTaskWorker{point: 3, status: Finished}},
 			tics:          2,
-			expectedPoint: 8,
+			expectedPoint: 9,
 		},
 		{
 			name:          "switch to high priority worker",

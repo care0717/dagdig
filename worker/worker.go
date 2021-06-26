@@ -9,6 +9,7 @@ const (
 )
 
 type TaskWorker interface {
+	MaxPoint() int32
 	ExecutingPoint() int32
 	Work() Status
 	Priority() int
@@ -19,6 +20,15 @@ type taskWorker struct {
 	tasks    []int32
 }
 
+func (t taskWorker) MaxPoint() int32 {
+	var max int32
+	for _, task := range t.tasks {
+		if max < task {
+			max = task
+		}
+	}
+	return max
+}
 func (t taskWorker) Priority() int {
 	return t.priority
 }

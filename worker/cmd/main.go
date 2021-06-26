@@ -32,6 +32,7 @@ func main() {
 			worker := openapi.NewTaskWorker(j.Priority, j.Tasks)
 			manager.Add(worker)
 		}
-		fmt.Println(manager.Run())
+		point := manager.Run()
+		fmt.Println(point)
 	}
 }
