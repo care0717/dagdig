@@ -31,7 +31,7 @@ func Parse(input io.Reader) (Job, error) {
 			job.Priority = lines[i]
 		case "[Tasks]":
 			i++
-			for ;i < len(lines); i++ {
+			for ; i < len(lines); i++ {
 				if lines[i] == "" {
 					continue
 				}
@@ -41,8 +41,6 @@ func Parse(input io.Reader) (Job, error) {
 				}
 				job.Tasks = append(job.Tasks, int32(point))
 			}
-		case "":
-			continue
 		}
 	}
 	return job, nil

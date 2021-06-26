@@ -11,12 +11,11 @@ package openapi
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 )
 
 // DefaultApiService is a service that implents the logic for the DefaultApiServicer
-// This service should implement the business logic for every endpoint for the DefaultApi API. 
+// This service should implement the business logic for every endpoint for the DefaultApi API.
 // Include any external packages or services that will be required by this service.
 type DefaultApiService struct {
 	cache map[string][]Job
@@ -27,7 +26,7 @@ func NewDefaultApiService(cache map[string][]Job) DefaultApiServicer {
 	return &DefaultApiService{cache}
 }
 
-// JobsGet - 
+// JobsGet -
 func (s *DefaultApiService) JobsGet(ctx context.Context, created string) (ImplResponse, error) {
 	if created == "" {
 		var allJobs []Job
@@ -39,7 +38,6 @@ func (s *DefaultApiService) JobsGet(ctx context.Context, created string) (ImplRe
 	if targetJobs, ok := s.cache[created]; ok {
 		return Response(http.StatusOK, targetJobs), nil
 	} else {
-		return Response(http.StatusNotFound, nil), fmt.Errorf("job created at %s not found", created)
+		return Response(http.StatusOK, []Job{}), nil
 	}
 }
-
