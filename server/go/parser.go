@@ -41,8 +41,6 @@ func Parse(input io.Reader) (Job, error) {
 				}
 				job.Tasks = append(job.Tasks, int32(point))
 			}
-		case "":
-			continue
 		}
 	}
 	return job, nil

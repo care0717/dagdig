@@ -24,4 +24,5 @@
 go/api_*.go
 Dockerfile
 go.mod
+go.sum
 main.go
