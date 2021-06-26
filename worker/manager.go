@@ -1,5 +1,7 @@
 package openapi
 
+import "sort"
+
 type WorkerManager struct {
 	capacity       int
 	readyWorkers   []TaskWorker
@@ -38,6 +40,9 @@ func (m *WorkerManager) Run() int {
 			nextReadyWorkers = append(nextReadyWorkers, w)
 		}
 	}
+	sort.Slice(nextReadyWorkers, func(i, j int) bool {
+		return nextReadyWorkers[i].Priority() > nextReadyWorkers[j].Priority()
+	})
 	m.readyWorkers = nextReadyWorkers
 	m.runningWorkers = nextRunningWorkers
 	return runningPoint

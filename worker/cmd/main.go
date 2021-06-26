@@ -29,7 +29,7 @@ func main() {
 			panic(err)
 		}
 		for _, j := range jobs {
-			worker := openapi.NewTaskWorker(j.Tasks)
+			worker := openapi.NewTaskWorker(j.Priority, j.Tasks)
 			manager.Add(worker)
 		}
 		fmt.Println(manager.Run())

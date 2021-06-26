@@ -3,10 +3,14 @@ package openapi
 import "testing"
 
 type mockTaskWorker struct {
-	point  int32
-	status Status
+	point    int32
+	status   Status
+	priority int
 }
 
+func (m mockTaskWorker) Priority() int {
+	return m.priority
+}
 func (m mockTaskWorker) ExecutingPoint() int32 {
 	return m.point
 }
@@ -48,6 +52,13 @@ func TestWorkerManagerRun(t *testing.T) {
 			runningWorker: []TaskWorker{&mockTaskWorker{point: 3, status: Finished}},
 			tics:          2,
 			expectedPoint: 8,
+		},
+		{
+			name:          "switch to high priority worker",
+			readyWorker:   []TaskWorker{&mockTaskWorker{point: 8}, &mockTaskWorker{point: 6, priority: 1}},
+			runningWorker: []TaskWorker{&mockTaskWorker{point: 4, status: Finished}, &mockTaskWorker{point: 3, status: Finished, priority: 1}},
+			tics:          2,
+			expectedPoint: 9,
 		},
 		{
 			name:          "running forever",
