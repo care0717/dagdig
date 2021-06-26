@@ -31,6 +31,9 @@ func (t *taskWorker) Work() Status {
 	t.tasks[0]--
 	if t.tasks[0] == 0 {
 		t.tasks = t.tasks[1:]
+		if t.completed() {
+			return Completed
+		}
 		return Finished
 	}
 	return Running
