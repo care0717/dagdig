@@ -10,6 +10,7 @@
 package main
 
 import (
+	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -20,7 +21,11 @@ import (
 )
 
 func main() {
-	dataDirectory := "./data"
+	var (
+		dataDirectory string
+	)
+	flag.StringVar(&dataDirectory, "data", "./data", "job data directory")
+	flag.Parse()
 	files, err := ioutil.ReadDir(dataDirectory)
 	if err != nil {
 		panic(err)
