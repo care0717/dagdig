@@ -11,7 +11,6 @@ package openapi
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 )
 
@@ -39,7 +38,7 @@ func (s *DefaultApiService) JobsGet(ctx context.Context, created string) (ImplRe
 	if targetJobs, ok := s.cache[created]; ok {
 		return Response(http.StatusOK, targetJobs), nil
 	} else {
-		return Response(http.StatusNotFound, nil), fmt.Errorf("job created at %s not found", created)
+		return Response(http.StatusOK, []Job{}), nil
 	}
 }
 
