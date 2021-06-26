@@ -41,7 +41,13 @@ func (m *WorkerManager) Run() int {
 		}
 	}
 	sort.Slice(nextReadyWorkers, func(i, j int) bool {
-		return nextReadyWorkers[i].Priority() > nextReadyWorkers[j].Priority()
+		if nextReadyWorkers[i].Priority() != nextReadyWorkers[j].Priority() {
+			return nextReadyWorkers[i].Priority() > nextReadyWorkers[j].Priority()
+		}
+		if nextReadyWorkers[i].ExecutingPoint() != nextReadyWorkers[j].ExecutingPoint() {
+			return nextReadyWorkers[i].ExecutingPoint() > nextReadyWorkers[j].ExecutingPoint()
+		}
+		return nextReadyWorkers[i].MaxPoint() > nextReadyWorkers[j].MaxPoint()
 	})
 	m.readyWorkers = nextReadyWorkers
 	m.runningWorkers = nextRunningWorkers
