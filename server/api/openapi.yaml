@@ -4,7 +4,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  title: Workflow tool
+  title: dagdig
   version: 1.0.0
 servers:
 - url: http://localhost:8080/api

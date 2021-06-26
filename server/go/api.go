@@ -1,5 +1,5 @@
 /*
- * Workflow tool
+ * dagdig
  *
  * PFN 2019 Internship Challenge
  *

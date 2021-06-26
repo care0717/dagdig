@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Workflow tool
+  title: dagdig
   description: PFN 2019 Internship Challenge
   license:
     name: Apache 2.0

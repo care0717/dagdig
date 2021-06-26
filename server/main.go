@@ -16,7 +16,7 @@ import (
 	"os"
 	"path/filepath"
 
-	openapi "github.com/care0717/workflow-tool-server/go"
+	openapi "github.com/care0717/dagdig/go"
 )
 
 func main() {

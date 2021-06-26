@@ -1,4 +1,4 @@
-module github.com/care0717/workflow-tool-server
+module github.com/care0717/dagdig
 
 go 1.16
 
