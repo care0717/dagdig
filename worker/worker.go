@@ -1,27 +1,46 @@
 package openapi
 
-type TaskWorker struct {
+type Status int
+
+const (
+	Running Status = iota + 1
+	Finished
+	Completed
+)
+
+type TaskWorker interface {
+	ExecutingPoint() int32
+	Work() Status
+}
+
+type taskWorker struct {
 	tasks []int32
 }
-func (t TaskWorker) Complete() bool {
+
+func (t taskWorker) completed() bool {
 	return len(t.tasks) == 0
 }
-func (t TaskWorker) ExecutingPoint() int32 {
-	if t.Complete() {
+func (t taskWorker) ExecutingPoint() int32 {
+	if t.completed() {
 		return 0
 	}
 	return t.tasks[0]
 }
-func (t *TaskWorker) Work() {
-	if t.Complete() {
-		return
+func (t *taskWorker) Work() Status {
+	if t.completed() {
+		return Completed
 	}
 	t.tasks[0]--
 	if t.tasks[0] == 0 {
 		t.tasks = t.tasks[1:]
+		if t.completed() {
+			return Completed
+		}
+		return Finished
 	}
+	return Running
 }
 
 func NewTaskWorker(tasks []int32) TaskWorker {
-	return TaskWorker{tasks: tasks}
+	return &taskWorker{tasks: tasks}
 }

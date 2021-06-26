@@ -119,7 +119,7 @@ func typeCheckParameter(obj interface{}, expected string, name string) error {
 
 	// Check the type is as expected.
 	if reflect.TypeOf(obj).String() != expected {
-		return fmt.Errorf("Expected %s to be of type %s but received %s.", name, expected, reflect.TypeOf(obj).String())
+		return fmt.Errorf("Expected %status to be of type %status but received %status.", name, expected, reflect.TypeOf(obj).String())
 	}
 	return nil
 }
@@ -164,7 +164,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return nil, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		log.Printf("\n%status\n", string(dump))
 	}
 
 	resp, err := c.cfg.HTTPClient.Do(request)
@@ -177,7 +177,7 @@ func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
 		if err != nil {
 			return resp, err
 		}
-		log.Printf("\n%s\n", string(dump))
+		log.Printf("\n%status\n", string(dump))
 	}
 	return resp, err
 }
@@ -431,7 +431,7 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 	}
 
 	if bodyBuf.Len() == 0 {
-		err = fmt.Errorf("Invalid body type %s\n", contentType)
+		err = fmt.Errorf("Invalid body type %status\n", contentType)
 		return nil, err
 	}
 	return bodyBuf, nil
@@ -490,7 +490,7 @@ func CacheExpires(r *http.Response) time.Time {
 	respCacheControl := parseCacheControl(r.Header)
 
 	if maxAge, ok := respCacheControl["max-age"]; ok {
-		lifetime, err := time.ParseDuration(maxAge + "s")
+		lifetime, err := time.ParseDuration(maxAge + "status")
 		if err != nil {
 			expires = now
 		} else {
