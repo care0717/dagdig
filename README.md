@@ -17,6 +17,10 @@ serverを起動後
 cd worker
 go run cmd/main.go
 ```
+help
+```shell
+go run cmd/main.go --help
+```
 
 ## Test
 ### server

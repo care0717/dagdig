@@ -2,20 +2,26 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	openapi "github.com/care0717/digdag-worker"
 	"time"
 )
 
 func main() {
+	var (
+		maxTime int
+		capacity int
+	)
+	flag.IntVar(&maxTime, "workMaxTime", 4800, "work max time [sec]")
+	flag.IntVar(&capacity, "capacity", 15, "worker capacity")
+	flag.Parse()
 	cfg := openapi.NewConfiguration()
 	c := openapi.NewAPIClient(cfg)
 
 	ctx := context.Background()
-	maxTime := 2*60*60
-	var workers []openapi.TaskWorker
+	manager := openapi.NewWorkerManager(capacity)
 	for i := 0; i < maxTime; i++ {
-		var currentExecutingPoint int
 		created := openapi.ToCreatedFormat(time.Duration(i)*time.Second)
 		req := c.DefaultApi.JobsGet(ctx).Created(created)
 		jobs, _, err := c.DefaultApi.JobsGetExecute(req)
@@ -23,17 +29,9 @@ func main() {
 			panic(err)
 		}
 		for _, j := range jobs {
-			workers = append(workers, openapi.NewTaskWorker(j.Tasks))
+			worker := openapi.NewTaskWorker(j.Tasks)
+			manager.Add(worker)
 		}
-		var nextWorkers []openapi.TaskWorker
-		for _, w := range workers {
-			currentExecutingPoint += int(w.ExecutingPoint())
-			w.Work()
-			if !w.Complete() {
-				nextWorkers = append(nextWorkers, w)
-			}
-		}
-		workers = nextWorkers
-		fmt.Println(currentExecutingPoint)
+		fmt.Println(manager.Run())
 	}
 }
