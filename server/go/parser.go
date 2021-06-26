@@ -1,41 +1,40 @@
 package openapi
 
 import (
+	"bufio"
 	"io"
-	"io/ioutil"
 	"strconv"
-	"strings"
 )
 
 func Parse(input io.Reader) (Job, error) {
-	body, err := ioutil.ReadAll(input)
-	if err != nil {
-		return Job{}, err
-	}
-	lines := strings.Split(string(body), "\n")
+	scanner := bufio.NewScanner(input)
 	job := Job{}
-	for i := 0; i < len(lines); i++ {
-		switch lines[i] {
+	for scanner.Scan() {
+		line := scanner.Text()
+		switch line {
 		case "[JobID]":
-			i++
-			id, err := strconv.Atoi(lines[i])
+			scanner.Scan()
+			line = scanner.Text()
+			id, err := strconv.Atoi(line)
 			if err != nil {
 				return Job{}, err
 			}
 			job.Id = int32(id)
 		case "[Created]":
-			i++
-			job.Created = lines[i]
+			scanner.Scan()
+			line = scanner.Text()
+			job.Created = line
 		case "[Priority]":
-			i++
-			job.Priority = lines[i]
+			scanner.Scan()
+			line = scanner.Text()
+			job.Priority = line
 		case "[Tasks]":
-			i++
-			for ; i < len(lines); i++ {
-				if lines[i] == "" {
+			for scanner.Scan() {
+				line = scanner.Text()
+				if line == "" {
 					continue
 				}
-				point, err := strconv.Atoi(lines[i])
+				point, err := strconv.Atoi(line)
 				if err != nil {
 					return Job{}, err
 				}
