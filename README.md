@@ -1,4 +1,4 @@
-# workflow-tool
+# dagdig
 PFN 2019 インターンシップ課題を解くためのレポジトリ
 
 ## How to use
