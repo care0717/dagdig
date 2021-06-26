@@ -38,7 +38,7 @@ func TestTaskWorker(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			worker := NewTaskWorker(tt.tasks)
+			worker := NewTaskWorker("Low", tt.tasks)
 			for i := 0; i < tt.tics; i++ {
 				worker.Work()
 			}

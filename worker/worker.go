@@ -11,12 +11,17 @@ const (
 type TaskWorker interface {
 	ExecutingPoint() int32
 	Work() Status
+	Priority() int
 }
 
 type taskWorker struct {
-	tasks []int32
+	priority int
+	tasks    []int32
 }
 
+func (t taskWorker) Priority() int {
+	return t.priority
+}
 func (t taskWorker) completed() bool {
 	return len(t.tasks) == 0
 }
@@ -41,6 +46,10 @@ func (t *taskWorker) Work() Status {
 	return Running
 }
 
-func NewTaskWorker(tasks []int32) TaskWorker {
-	return &taskWorker{tasks: tasks}
+func NewTaskWorker(priority string, tasks []int32) TaskWorker {
+	if priority == "Low" {
+		return &taskWorker{priority: 0, tasks: tasks}
+	} else {
+		return &taskWorker{priority: 1, tasks: tasks}
+	}
 }
